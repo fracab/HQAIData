@@ -49,7 +49,7 @@ theme(text = element_text(size=20))
 
 # short dataframe with averages for comparison with single organizations
 '%!in%' <- function(x,y)!('%in%'(x,y))
-  dfAVold<-df[df$Organization %!in% c('Women Support Association', 'Plan Int', 'Caritas DK', 'Coast Trust','Average'),]
+dfAVold<-df[df$Organization %!in% c('Women Support Association', 'Plan Int', 'Caritas DK', 'Coast Trust','Average'),]
 dfAVold<-aggregate(dfAVold[, 3], list(dfAVold$Commitment), mean)
 dfAVold$Organization<-"OldAverage"
 colnames(dfAVold)<-c("Commitment","Score","Organization")
@@ -98,3 +98,20 @@ radarCaritasDK<-ggplot(dfCarDK, aes(x=Commitment, y=Score, group=Organization, c
   geom_polygon (aes(),show.legend = TRUE) + ylim (0,5) + theme_bw() +
   coord_polar() + ggtitle ("Caritas DK") + 
   scale_color_manual(values = c("red","pink","black")) +scale_fill_manual(values = c("red","red","black"))+ scale_alpha_manual(values = c(0,0.5,0))
+
+#Radar plot Adra INT
+dfAdraInt<-df[df$Organization=='Adra Int',]
+dfAdraInt <- rbind(dfAdraInt, dfAVshort, dfAVold) 
+
+radardfAdraInt<-ggplot(dfAdraInt, aes(x=Commitment, y=Score, group=Organization, color=Organization, fill=Organization, alpha=Organization)) +
+  geom_polygon (aes(),show.legend = TRUE) + ylim (0,5) + theme_bw() +
+  coord_polar() + ggtitle ("Adra International") + 
+  scale_color_manual(values = c("cyan","red","black")) +scale_fill_manual(values = c("cyan","red","black"))+ scale_alpha_manual(values = c(0.5,0,0))
+
+#Radar plot Adra DK and Adra Int
+dfAdraAdra<-rbind(df[df$Organization=="Adra Int",],df[df$Organization=="Adra DK",])
+
+radarAdraAdra<-ggplot(dfAdraAdra, aes(x=Commitment, y=Score, group=Organization, color=Organization)) +
+  geom_polygon (aes(fill=Organization), alpha=0.3) +  ylim (0,5) + theme_bw() +
+  coord_polar() + ggtitle ("Adra International and Adra Denmark")
+
