@@ -115,3 +115,7 @@ radarAdraAdra<-ggplot(dfAdraAdra, aes(x=Commitment, y=Score, group=Organization,
   geom_polygon (aes(fill=Organization), alpha=0.3) +  ylim (0,5) + theme_bw() +
   coord_polar() + ggtitle ("Adra International and Adra Denmark")
 
+
+
+
+
